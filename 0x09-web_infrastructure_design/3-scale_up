@@ -1,0 +1,13 @@
+### Additional Elements and Why They Are Added
+
+## Extra Load Balancer (HAProxy 2)
+
+    High Availability. If HAProxy 1 fails, HAProxy 2 can take over, ensuring zero downtime.
+
+## Separation of Web and Application Servers
+
+    Improves scalability, security, and maintenance. Each role can be scaled independently.
+
+## Dedicated Database Servers
+
+    Splitting into one Primary (writes) and multiple Replicas (reads) reduces load on the primary database.
