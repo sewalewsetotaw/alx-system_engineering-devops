@@ -1,0 +1,45 @@
+### What is a server?
+
+A server is a computer (hardware) or a program (software) that provides services to other computers, called clients, over a network. In this case, our server hosts the website and responds to user/client requests.
+
+## What is the role of the domain name?
+
+A domain name is a human-readable address that maps to the server’s IP address.
+
+## What type of DNS record is www in www.foobar.com?
+
+www is a subdomain of foobar.com. It will be an A record that directly maps www.foobar.com to the server’s IP address (8.8.8.8).
+
+## What is the role of the web server (Nginx)?
+
+The web server handles HTTP requests from users or clients.
+
+## What is the role of the application server?
+
+The application server processes the business logic of the website.
+
+## What is the role of the database (MySQL)?
+
+The database stores, organizes, and retrieves data used by the application.
+
+## What is the server using to communicate with the user’s computer?
+
+The server communicates over the Internet using network protocols like:
+
+    HTTP/HTTPS for web content delivery.
+
+    TCP/IP as the underlying transport protocol.
+
+### ## Issues in This Infrastructure
+
+## Single Point of Failure (SPOF)
+
+If the only server fails (hardware failure, crash, etc.), the entire website becomes unavailable.
+
+## Downtime During Maintenance
+
+Since there’s only one server, updating the code, restarting the web server, or changing configurations will take the site offline temporarily.
+
+## No Scalability
+
+One server cannot handle high traffic loads efficiently. If the number of users spikes, response times will slow down or the site may become unresponsive.

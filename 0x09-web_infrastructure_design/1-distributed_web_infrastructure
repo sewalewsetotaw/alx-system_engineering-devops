@@ -1,0 +1,43 @@
+### additional element
+
+    ## Load Balancer (HAproxy):
+
+    Added to distribute incoming traffic among multiple web servers (Web1, Web2, Web3) to increase availability, balance load, and prevent overload on a single server.
+
+    ## Multiple Servers:
+
+    To enable horizontal scaling, redundancy, and fault tolerance.
+
+## Replication:
+
+Primary-Replica setup to separate reads and writes, increasing database read throughput and availability.
+
+## distribution algorithm
+
+Round Robin Algorithm: HAproxy forwards requests to backend servers sequentially, cycling through Web1, Web2, and Web3 equally. This distributes traffic evenly across servers.
+
+## High Availability cluster
+
+    Active-Active Setup: All backend servers (Web1, Web2, Web3) are actively serving traffic simultaneously. This improves availability and balances load.
+
+    Active-Passive Setup: Only one server actively handles traffic while others remain on standby as failover in case the active server fails.
+
+In this design, the load balancer is configured in Active-Active mode.
+
+## How the database Primary-Replica (Master-Slave) cluster work?
+
+    The Primary (Master) database handles all write operations.
+
+    The Replica (Slave) databases asynchronously replicate data from the Primary and handle read operations.
+
+## Difference between Primary and Replica
+
+    The Primary node processes write operations, and Replicas serve read requests to reduce load on Primary and improve read scalability.
+
+## Issues in This Infrastructure
+
+    SPOF at load balancer: If HAproxy fails, the site is unreachable.
+
+    Security risks: No firewall or HTTPS, so data is unencrypted and vulnerable.
+
+    No monitoring: Unable to detect failures or performance issues proactively.

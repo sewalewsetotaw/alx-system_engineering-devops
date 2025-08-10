@@ -1,0 +1,74 @@
+### Additional Elements and Why They Are Added
+
+## Firewall 1 (External Traffic Filter) –
+
+    Sits between the public internet and the load balancer to block malicious traffic (DDoS attempts, IP blacklists, known exploits).
+
+## Firewall 2 (App Layer Segmentation) –
+
+    Restricts communication between the load balancer and application servers, allowing only necessary protocols (e.g., HTTP/HTTPS).
+
+## Firewall 3 (Database Layer Security) –
+
+    Ensures that only application servers can reach the database; blocks direct internet access to DB servers.
+
+## SSL Certificate –
+
+    Encrypts all traffic to www.foobar.com over HTTPS to protect sensitive data (e.g., logins, cookies) from interception.
+
+## Monitoring Clients (3 total) –
+
+    Installed on each server to collect metrics (CPU, memory, disk, network usage, request counts, errors) and send them to a central monitoring server.
+
+
+## What Are Firewalls For?
+
+Firewalls act as traffic gatekeepers. They inspect incoming and outgoing packets against a set of rules, blocking anything suspicious or unauthorized. This prevents unauthorized access, malware, and DDoS traffic from reaching internal systems.
+
+## Why Is the Traffic Served Over HTTPS?
+
+    Encryption: HTTPS encrypts data in transit so attackers can’t read it (protects passwords, payment info, etc.).
+
+    Authentication: The SSL/TLS certificate ensures users are really talking to www.foobar.com and not an imposter.
+
+    Integrity: Prevents data from being modified during transfer.
+
+## What Monitoring Is Used For
+
+Monitoring is like a health tracker for infrastructure. It Alerts when something goes wrong (server down, high CPU load, DB unresponsive).
+
+## How the Monitoring Tool Collects Data
+
+In this design:
+
+    Monitoring clients (agents) are installed on each server.
+
+    Agents periodically collect system/application metrics (via OS APIs, log scraping, HTTP endpoint checks).
+
+    Data is sent securely to the central monitoring server (e.g., Sumo Logic, Prometheus).
+
+    The central server stores, processes, and displays the metrics in dashboards.
+
+## How to Monitor Web Server QPS (Queries per Second)
+
+    Enable access logging in Nginx/Apache.
+
+    Configure the monitoring client to parse log files and count requests per second.
+
+    Alternatively, use Nginx's built-in stub_status module or an application-level metric.
+
+    Send the QPS metric to the monitoring server to create a QPS dashboard and alerts when thresholds are exceeded.
+
+## Issues in This Infrastructure
+
+    Why Terminating SSL at the Load Balancer Is an Issue
+
+        If SSL is terminated at the load balancer, traffic between the load balancer and backend servers is unencrypted.
+
+    Why Having Only One MySQL Server Accepting Writes Is an Issue
+
+        Creates a single point of failure for write operations — if the primary DB goes down, no new data can be inserted.
+
+    Why Having Servers with All the Same Components Might Be a Problem
+
+        All-in-one design (web + app + DB on same machine) means a failure in one service can take down the others.
